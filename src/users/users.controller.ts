@@ -1,21 +1,46 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Query, UseInterceptors } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Query, Session, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { SerializeInterceptor } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
+import { AuthService } from './auth.service';
+import { currentUser } from './decorators/current-user.decorator';
+import { User } from './users.entity';
+import { AuthGuard } from 'src/guards/auth.guard';
+
 @Controller('auth')
 @Serialize(UserDto)
 export class UsersController {
+    constructor(private userService: UsersService,
+        private authService: AuthService
+    ) { }
 
-    constructor(private userService: UsersService) { }
-
-    @Post('/signup')
-    async createUser(@Body() body: CreateUserDto) {
-        this.userService.create(body.email, body.password)
+    @Get('/whoami')
+    @UseGuards(AuthGuard)
+    whoAmI(@currentUser() user: User) {
+        return user;
     }
 
+    @Post('/signup')
+    async createUser(@Body() body: CreateUserDto, @Session() session: any) {
+
+        const user = await this.authService.signUp(body.email, body.password)
+        session.userId = user.id
+        return user
+    }
+    @Post('/signin')
+    async signIn(@Body() body: CreateUserDto, @Session() session: any) {
+        const user = await this.authService.signIn(body.email, body.password)
+        session.userId = user.id
+        return user
+    }
+    @Post('/signout')
+    async signOut(@Session() session: any) {
+        session.userId = null
+        return 'You have logged out'
+    }
     @Get('/:id')
     async findUser(@Param('id') id: string) {
         console.log('Handler is running');
@@ -30,6 +55,7 @@ export class UsersController {
     findAllUsers() {
         return this.userService.findAll()
     }
+
 
     @Get()
     findUserByEmail(@Query('email') email: string) {
