@@ -12,7 +12,7 @@ export class AuthService {
     async signUp(email: string, password: string) {
         const user = await this.userService.find(email);
         if (user.length) {
-            throw new BadRequestException('User already exists');
+            throw new Error('Email in use');
         }
 
         const salt = randomBytes(8).toString('hex');
