@@ -13,6 +13,9 @@ export class Report {
     @Column()
     make: string;
 
+    @Column({ default: true })
+    admin: boolean;
+
     @Column()
     model: string;
 
@@ -30,5 +33,8 @@ export class Report {
 
     @ManyToOne(() => User, user => user.reports)
     user: User;
+
+    @Column({ default: false })
+    approved: boolean;
 
 }

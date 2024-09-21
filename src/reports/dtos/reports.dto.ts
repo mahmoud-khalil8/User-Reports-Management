@@ -20,6 +20,9 @@ export class ReportDto {
     lng: number;
 
     @Expose()
+    approved: boolean;
+
+    @Expose()
     lat: number;
 
     @Expose()
