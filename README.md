@@ -39,77 +39,69 @@ This project is a NestJS API that includes user authentication, session manageme
 ### Steps
 
 1. Clone the repository:
-   ```bash
+   ```
    git clone https://github.com/your-repo/nestjs-auth-reports.git
    cd nestjs-auth-reports
-
+   ```
     Install the dependencies:
-
-    bash
-
-npm install
-
-Set up environment variables by creating .env.development and .env.test files. Add the following keys:
-
-makefile
-
-DB_NAME=db.sqlite
-COOKIE_KEY=<your-cookie-key>
-
-Run database migrations (optional if you use SQLite):
-
-bash
-
-npm run migration:run
-
-Start the development server:
-
-bash
-
-    npm run start:dev
-
-Endpoints
-Authentication Routes
-
-    POST /auth/signup: Sign up a new user.
-    POST /auth/signin: Log in an existing user.
-    POST /auth/signout: Log out a user.
-    GET /auth/whoami: Get the details of the currently logged-in user.
-
-User Management Routes
-
-    GET /auth/:id: Get user by ID.
-    GET /auth?email={email}: Get users by email.
-    PATCH /auth/:id: Update user details.
-    DELETE /auth/:id: Delete a user.
-
-Reports Routes
-
-    POST /reports: Create a report (requires authentication).
-    GET /reports: Get a price estimate based on report parameters.
-    PATCH /reports/:id: Approve a report (requires admin access).
-
-Unit Testing
-
-Run the unit tests using:
-
-bash
-
-npm run test
-
-The application includes tests for authentication services, user management, and reports.
-Project Structure
-
-bash
-
-src
-├── app.module.ts         # Main app module
-├── app.controller.ts     # Main app controller
-├── users                 # Users module, controller, services, and tests
-├── reports               # Reports module, controller, services, and tests
-├── guards                # Guards for authentication and admin protection
-├── interceptors          # Custom serialization interceptor
-├── middlewares           # Middleware for setting current user from session
-└── dtos                  # Data transfer objects for validation
-
-  
+    ```
+    npm install
+    ```
+    Set up environment variables by creating .env.development and .env.test files. Add the following keys:
+    
+    makefile
+    
+    DB_NAME=db.sqlite
+    COOKIE_KEY=<your-cookie-key>
+    
+    Run database migrations (optional if you use SQLite):
+    
+    
+    ```
+        npm run start:dev
+    ```
+    Endpoints
+    Authentication Routes
+    
+        POST /auth/signup: Sign up a new user.
+        POST /auth/signin: Log in an existing user.
+        POST /auth/signout: Log out a user.
+        GET /auth/whoami: Get the details of the currently logged-in user.
+    
+    User Management Routes
+    
+        GET /auth/:id: Get user by ID.
+        GET /auth?email={email}: Get users by email.
+        PATCH /auth/:id: Update user details.
+        DELETE /auth/:id: Delete a user.
+    
+    Reports Routes
+    
+        POST /reports: Create a report (requires authentication).
+        GET /reports: Get a price estimate based on report parameters.
+        PATCH /reports/:id: Approve a report (requires admin access).
+    
+    Unit Testing
+    
+    Run the unit tests using:
+    
+    ```
+    
+    npm run test
+    ```
+    The application includes tests for authentication services, user management, and reports.
+    Project Structure
+    
+    ```
+    
+    src
+    ├── app.module.ts         # Main app module
+    ├── app.controller.ts     # Main app controller
+    ├── users                 # Users module, controller, services, and tests
+    ├── reports               # Reports module, controller, services, and tests
+    ├── guards                # Guards for authentication and admin protection
+    ├── interceptors          # Custom serialization interceptor
+    ├── middlewares           # Middleware for setting current user from session
+    └── dtos                  # Data transfer objects for validation
+    ```
+      
